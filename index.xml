@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>James Issac</title>
-    <link>https://james.me/</link>
+    <link>https://jamesis.me/</link>
     <description>Recent content on James Issac</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://james.me/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jamesis.me/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
