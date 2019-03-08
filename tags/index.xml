@@ -10,5 +10,14 @@
 	<atom:link href="https://jamesis.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title>Travel</title>
+      <link>https://jamesis.me/tags/travel/</link>
+      <pubDate>Tue, 22 Apr 2014 21:02:31 -0500</pubDate>
+      
+      <guid>https://jamesis.me/tags/travel/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
