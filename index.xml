@@ -5,12 +5,244 @@
     <link>https://jamesis.me/</link>
       <atom:link href="https://jamesis.me/index.xml" rel="self" type="application/rss+xml" />
     <description>James Issac</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>2020 James Issac</copyright><lastBuildDate>Fri, 30 Sep 2016 22:21:31 -0500</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>2020 James Issac</copyright><lastBuildDate>Tue, 22 Oct 2019 15:51:20 -0500</lastBuildDate>
     <image>
       <url>https://jamesis.me/img/icon-192.png</url>
       <title>James Issac</title>
       <link>https://jamesis.me/</link>
     </image>
+    
+    <item>
+      <title>Clustering: Birds of a Feather Flock Together</title>
+      <link>https://jamesis.me/post/clustering/</link>
+      <pubDate>Tue, 22 Oct 2019 15:51:20 -0500</pubDate>
+      <guid>https://jamesis.me/post/clustering/</guid>
+      <description>&lt;p&gt;The task of grouping data points into groups (clusters) such that points in a group are more ‘similar’ to each other than to points outside the group is called clustering. But how does one know if a data point is similar to another point or not? This act of defining similarity is what distinguishes various clustering methods from each other — K-Means defines similarity by the closeness of a data point to the centroid of the clusters while DBSCAN defines similarity by grouping together data points that are within the same density region.
+In this article, we’ll take a look at these two clustering methods that are often used in unsupervised machine learning and implement them in Python. So let’s get started!&lt;/p&gt;
+&lt;h2 id=&#34;k-means&#34;&gt;K-Means&lt;/h2&gt;
+&lt;p&gt;The K-Means clustering algorithm is a type of hard clustering — a data point can belong only to one cluster completely (as opposed to a soft clustering method in which each data point is assigned a probability or likelihood to be in a given cluster).
+The K-Means algorithm iterates through the following steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Specify the desired number of clusters K&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Initialize K cluster centroids&lt;/strong&gt; in some fashion. The centroids are not necessarily data points themselves but can be generated within the data domain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assign each data point to its closest cluster centroid&lt;/strong&gt;. ‘Closest’ is defined by minimizing the Euclidean distance (or L2 norm), which is the square root of the sum of the squared vector values (think Pythagorean theorem in 2D).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reassign K cluster centroids&lt;/strong&gt; by calculating the mean of all points within each cluster and setting the new centroid values as that.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Calculate the distance&lt;/strong&gt; each centroid changed from its previous value&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repeat steps 3, 4, and 5&lt;/strong&gt; until the distance each centroid changes drops below a predefined threshold or until a predefined number of iterations has been reached.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;k-means-assumptions-and-limitations&#34;&gt;K-Means Assumptions and Limitations&lt;/h3&gt;
+&lt;p&gt;It is important to note that K-Means reduces the within-cluster sum of squares, or the variance of the observations within each cluster. In other words, a cluster that has a small sum of squares is more compact than one with a large sum of squares. Furthermore, as the number of observations within a cluster increases, the sum of squares becomes larger. As a result, &lt;strong&gt;K-Means works best when the data points are organized in convex, spherical clusters and contain roughly the same number of points within each cluster&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In the figure below, whereas K-Means struggles clustering into two groups with the data points on the left, transforming the dataset from Cartesian to polar coordinates results in reasonable cluster assignments. Therefore, &lt;strong&gt;an important insight is to visualize and understand your dataset before applying a clustering algorithm to it&lt;/strong&gt;.
+&lt;img src=&#34;k-means.png&#34; alt=&#34;Source: http://varianceexplained.org/r/kmeans-free-lunch/&#34;&gt; &lt;em&gt;Source: &lt;a href=&#34;http://varianceexplained.org/r/kmeans-free-lunch/&#34;&gt;http://varianceexplained.org/r/kmeans-free-lunch/&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Also, since K-Means requires the number of clusters to be predefined, choosing the correct value for K is important but also difficult, especially when you cannot visualize all the dimensions in your dataset. However, you can use either the &lt;a href=&#34;https://en.wikipedia.org/wiki/Elbow_method_(clustering)&#34;&gt;Elbow Method&lt;/a&gt; or the &lt;a href=&#34;https://en.wikipedia.org/wiki/Silhouette_(clustering)&#34;&gt;Silhouette Method&lt;/a&gt; to determine the best choice of K when the number of clusters to choose is not clear.&lt;/p&gt;
+&lt;h2 id=&#34;dbscan&#34;&gt;DBSCAN&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf&#34;&gt;Density-Based Spatial Clustering of Applications with Noise&lt;/a&gt; or DBSCAN, for short, was proposed in 1996 and organizes clusters based on the density of points and unlike K-Means, determines the number of clusters to be generated without user input. Furthermore, DBSCAN allows us to classify noise (unlike K-Means) by defining noise as areas with lower density points than clusters. For example, whereas K-Means struggles with the following distribution, DBSCAN is able to correctly identify the clusters based on the density of points.
+&lt;img src=&#34;smiley.png&#34; alt=&#34;Source: https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/&#34;&gt;&lt;em&gt;Source: &lt;a href=&#34;https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/&#34;&gt;https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;There are two key ideas / hyperparameters in DBSCAN — &lt;em&gt;MinPts&lt;/em&gt; and &lt;em&gt;Eps&lt;/em&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;For each point in a cluster, there have to be at least a specified minimum number of points (MinPts) in its neighborhood, i.e. the density in the neighborhood has to exceed some threshold. The parameter MinPts primarily controls how tolerant the algorithm is to noise.&lt;/li&gt;
+&lt;li&gt;Neighborhood is defined as the space around a point (Eps) and its shape is determined by the chosen distance function, i.e. when using the Manhattan distance in 2D space, the shape of the neighborhood is rectangular. Similarly to K-Means, the most common distance function used for DBSCAN is Euclidean distance.
+Using these two hyperparamters, DBSCAN categorizes the data points into three categories: core points, or points inside of the cluster, border points, or points on the edge of the cluster, and noise, or points that do not belong to any cluster.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;dbscan-assumptions-and-limitations&#34;&gt;DBSCAN Assumptions and Limitations&lt;/h3&gt;
+&lt;p&gt;Because the parameter Eps controls the local neighborhood of the data points and influences cluster assignment, it is crucial to choose it appropriately and it usually cannot be left at the default value. If set too large, clusters will merge into one another, eventually returning one cluster if Eps is large enough. If set too small, most data points will not be clustered at all or be categorized as noise. The importance of choosing the right value of Eps is demonstrated in the figure below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;eps-compare.png&#34; alt=&#34;Effect of varying epsilson parameter&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Furthermore, DBSCAN struggles with datasets containing clusters with largely varying densities, as the parameters Eps and MinPts cannot be customized for each cluster. And for high-dimensional data, the standard choice of Euclidean distance suffers, which makes it challenging to find an appropriate value for Eps. Therefore, it is worth repeating as for K-Means, &lt;strong&gt;it is important to visualize and understand your dataset before applying a clustering algorithm to it&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/jissac/ScratchML/blob/master/Clustering.ipynb&#34;&gt;Refer to the following notebook&lt;/a&gt; for a from-scratch Python implementation of K-Means and DBSCAN, followed by a comparison with the popular Scikit-Learn implementation of the algorithms. Hope it helps you understand the inner workings of these two algorithms and the assumptions behind each!&lt;/p&gt;
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;In conclusion, K-Means and DBSCAN are two powerful algorithms to use when you have an unlabeled dataset that needs to be clustered into groups. However, &lt;strong&gt;remember to be mindful of the assumptions underlying the model you choose&lt;/strong&gt; — understanding your dataset and preprocessing it are essential in order to get correct predictions from your models. Also, be sure to read the Scikit-Learn clustering documentation to learn about other clustering algorithms!&lt;/p&gt;
+&lt;h2 id=&#34;references--helpful-links&#34;&gt;References / Helpful Links:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://scikit-learn.org/stable/modules/clustering.html&#34;&gt;https://scikit-learn.org/stable/modules/clustering.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://support.minitab.com/en-us/minitab/18/help-and-how-to/modeling-statistics/multivariate/how-to/cluster-k-means/interpret-the-results/all-statistics-and-graphs/&#34;&gt;https://support.minitab.com/en-us/minitab/18/help-and-how-to/modeling-statistics/multivariate/how-to/cluster-k-means/interpret-the-results/all-statistics-and-graphs/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf&#34;&gt;https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Essential SQL</title>
+      <link>https://jamesis.me/post/essential-sql/</link>
+      <pubDate>Fri, 23 Nov 2018 16:22:10 -0500</pubDate>
+      <guid>https://jamesis.me/post/essential-sql/</guid>
+      <description>&lt;p&gt;Given the rise of ‘big-data’, effectively managing and working with that stored data becomes very important — you’re only able to ask better questions if you can quickly glean insights from the data you have.
+Unlike smaller datasets that can fit easily into a local computer’s hard disk, big data by definition won’t fit into local storage and must instead be stored in a database — a structured set of information that can be queried, accessed, and updated in various ways.
+A database management system (DBMS) is the software that the end-user interacts with to use the database. To access the DBMS and database, we use a language called Structured Query Language (SQL) which provides a codified way to communicate with the DBMS and modify data stored in the database. SQL can be used to query and process data from DBMS tools like SQLite or Postgres or from the Hadoop Distributed File System (HDFS) using SQL-like languages like HiveQL or Spark SQL, for example.&lt;/p&gt;
+&lt;h2 id=&#34;basic-sql-query&#34;&gt;Basic SQL Query&lt;/h2&gt;
+&lt;p&gt;In the SQL workflow, most of the time is spent writing requests (queries) that fetch a subset of or edit values from tables contained in the database. An example query looks like:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;       
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt;         
+&lt;span style=&#34;color:#66d9ef&#34;&gt;LIMIT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;;     
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Breaking down the statement above,      &lt;br&gt;
+&lt;code&gt;SELECT *:&lt;/code&gt; selects which columns we want (* denotes all the columns)   &lt;br&gt;
+&lt;code&gt;FROM table_name:&lt;/code&gt; the table we want to query (&lt;code&gt;table_name&lt;/code&gt;)     &lt;br&gt;
+&lt;code&gt;LIMIT 5:&lt;/code&gt; the number of rows we want (first 5 in this case)&lt;/p&gt;
+&lt;p&gt;To filter rows by a specific criteria, we use the &lt;code&gt;WHERE&lt;/code&gt; statement.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;column_name&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;LIMIT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;A &lt;code&gt;WHERE&lt;/code&gt; statement contains three things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The column name we want to filter on (column_name)&lt;/li&gt;
+&lt;li&gt;A comparison operator (&amp;lt;,≤,&amp;gt;,≥,=,!=)&lt;/li&gt;
+&lt;li&gt;The value we want the database to compare each value to (0.5 in this case)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We can also use a conditional operator like &lt;code&gt;AND&lt;/code&gt; or &lt;code&gt;OR&lt;/code&gt; to further filter our results and the &lt;code&gt;ORDER BY&lt;/code&gt; clause to order our results by ascending (&lt;code&gt;ASC&lt;/code&gt;) or descending (&lt;code&gt;DESC&lt;/code&gt;) order.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;...
+&lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; [condition1] &lt;span style=&#34;color:#66d9ef&#34;&gt;AND&lt;/span&gt; [condition2]
+&lt;span style=&#34;color:#66d9ef&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;BY&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;column_name&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;DESC&lt;/span&gt;;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;summary-statistics&#34;&gt;Summary Statistics&lt;/h2&gt;
+&lt;p&gt;We can use SQL to code and execute summary statistics like mean and standard deviation and aggregate functions like count, max, and min. We can also use the alias syntax AS to temporarily rename a table or a column in a query and the &lt;code&gt;DISTINCT&lt;/code&gt; keyword in conjunction with the &lt;code&gt;SELECT&lt;/code&gt; statement to fetch only the unique records and disregard duplicates. The query below, for example, aggregates all the unique values of &lt;code&gt;col1&lt;/code&gt; in &lt;code&gt;table_name&lt;/code&gt;(which has been renamed as &lt;code&gt;table_alias_name&lt;/code&gt;), renames &lt;code&gt;col1&lt;/code&gt; as &lt;code&gt;col_alias_name&lt;/code&gt; and returns the row count.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;COUNT&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;DISTINCT&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;column_name&lt;/span&gt;)) &lt;span style=&#34;color:#66d9ef&#34;&gt;AS&lt;/span&gt; col_alias_name
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AS&lt;/span&gt; table_alias_name
+&lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; [condition1];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;grouping&#34;&gt;Grouping&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;GROUP BY&lt;/code&gt; clause allows us to further compute summary statistics by combining identical data into groups. It follows the &lt;code&gt;WHERE&lt;/code&gt; clause and precedes the &lt;code&gt;ORDER BY&lt;/code&gt; clause. To place conditions and filter on groups created by the &lt;code&gt;GROUP BY&lt;/code&gt; clause, we can use the &lt;code&gt;HAVING&lt;/code&gt; clause.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; col1_name, ROUND(&lt;span style=&#34;color:#66d9ef&#34;&gt;AVG&lt;/span&gt;(col2_name) &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AVG&lt;/span&gt;(col3_name), &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;AS&lt;/span&gt; percentage 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; [condition1]
+&lt;span style=&#34;color:#66d9ef&#34;&gt;GROUP&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;BY&lt;/span&gt; col1_name 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;HAVING&lt;/span&gt; percentage &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; .&lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;ORDER&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;BY&lt;/span&gt; percentage;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Oftentimes it’s useful to know the type of each column when doing arithmetic — this can be done using the &lt;code&gt;PRAGMA TABLE_INFO(table_name)&lt;/code&gt; command. And if we want to cast a column as a specific type, we can use the &lt;code&gt;CAST&lt;/code&gt; clause:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;CAST&lt;/span&gt;(col1_name &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; Float) &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;CAST&lt;/span&gt;(col2_name &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; Float) &lt;span style=&#34;color:#66d9ef&#34;&gt;AS&lt;/span&gt; alias_name
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;LIMIT&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;subqueries&#34;&gt;Subqueries&lt;/h2&gt;
+&lt;p&gt;Unlike imperative, object-oriented programming languages like Python or C++, SQL doesn’t have variables you can define and use. Instead, SQL is a declarative programming language where we focus on expressing computations instead of defining how to do them. So since we can’t assign variables, we’ll have to use something called subqueries, or a query nested within another query. Subqueries must be enclosed within parenthesis and can be used within the &lt;code&gt;WHERE&lt;/code&gt; clause:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;...
+&lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;column_name&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;OPERATOR&lt;/span&gt;
+   (&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AVG&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;column_name&lt;/span&gt;)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;or within the &lt;code&gt;SELECT&lt;/code&gt; clause:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;COUNT&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;), (&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;COUNT&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt; 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; [condition];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;or within both the &lt;code&gt;WHERE&lt;/code&gt; and &lt;code&gt;SELECT&lt;/code&gt; clauses:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;COUNT&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;), (&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;COUNT&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt; 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;WHERE&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;column_name&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;OPERATOR&lt;/span&gt;
+   (&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AVG&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;column_name&lt;/span&gt;)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;joining-data&#34;&gt;Joining Data&lt;/h2&gt;
+&lt;p&gt;Data will often be spread across multiple tables and in those cases, joining datasets together is often the first thing to do before doing analysis. In SQL, the JOIN clause combines data from two tables by using values common to each. The most common way to join data using SQL is by using an &lt;code&gt;INNER JOIN&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; table_name1
+&lt;span style=&#34;color:#66d9ef&#34;&gt;INNER&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;JOIN&lt;/span&gt; table_name2
+&lt;span style=&#34;color:#66d9ef&#34;&gt;ON&lt;/span&gt; [join_constraint]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;An &lt;code&gt;INNER JOIN&lt;/code&gt; won’t include any rows where there isn’t a mutual match from both tables — in this way we could end up losing data that is only present in one table. One solution is to use a &lt;code&gt;LEFT JOIN&lt;/code&gt;, which includes all the rows from the left (first) table that are not selected with the &lt;code&gt;INNER JOIN&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;SELECT&lt;/span&gt; col5_name 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt; table_name1
+&lt;span style=&#34;color:#66d9ef&#34;&gt;LEFT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;JOIN&lt;/span&gt; table_name2
+&lt;span style=&#34;color:#66d9ef&#34;&gt;ON&lt;/span&gt; table_name2.col1_name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; table_name1.col3_name
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The figure below shows the difference between &lt;code&gt;INNER JOIN&lt;/code&gt; and &lt;code&gt;LEFT JOIN&lt;/code&gt;.
+&lt;img src=&#34;joins.png&#34; alt=&#34;joins&#34;&gt;&lt;em&gt;Source: &lt;a href=&#34;http://www.sql-join.com/sql-join-types/&#34;&gt;http://www.sql-join.com/sql-join-types/&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;creating-tables&#34;&gt;Creating Tables&lt;/h2&gt;
+&lt;p&gt;To add tables in a database, we use the &lt;code&gt;CREATE TABLE&lt;/code&gt; clause.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-SQL&#34; data-lang=&#34;SQL&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;CREATE&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;TABLE&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;table_name&lt;/span&gt; (
+    column1_name column1_type,
+    column2_name column2_type,
+    column3_name column3_type,
+    ...
+);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Data types define what type of data a column can contain. There are many different types you can choose from including, &lt;code&gt;TEXT&lt;/code&gt;, &lt;code&gt;NUMERIC&lt;/code&gt;, &lt;code&gt;INTEGER&lt;/code&gt;, &lt;code&gt;FLOAT&lt;/code&gt;, &lt;code&gt;BLOB&lt;/code&gt;, many others.
+If you make a mistake creating a table using the command &lt;code&gt;DROP TABLE table_name&lt;/code&gt; will delete the created table. You can use the dot command &lt;code&gt;.schema table_name&lt;/code&gt; to view the schema for the table you created and you can use the &lt;code&gt;ALTER&lt;/code&gt; command to add, delete, or modify columns in an existing table.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;I hope this gets you started on your SQL journey. As always, there’s much more to learn and queries can become quite complicated. However, these basics will guide you as you practice — so here’s to more querying!&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;resources&#34;&gt;Resources:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;These are my notes from the excellent DataQuest learning track. Check them out and subscribe at &lt;a href=&#34;http://www.dataquest.io&#34;&gt;www.dataquest.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;For a complete list of SQL commands, check out: &lt;a href=&#34;https://www.tutorialspoint.com/sqlite&#34;&gt;https://www.tutorialspoint.com/sqlite&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A SQL style guide: &lt;a href=&#34;https://www.sqlstyle.guide/&#34;&gt;https://www.sqlstyle.guide/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Understanding Deep Neural Networks from First Principles: Logistic Regression</title>
+      <link>https://jamesis.me/post/deep-learning-lr/</link>
+      <pubDate>Wed, 18 Apr 2018 16:41:18 -0500</pubDate>
+      <guid>https://jamesis.me/post/deep-learning-lr/</guid>
+      <description>&lt;p&gt;Over the past few decades, the digitization of our society has led to massive amounts of data being stored. Combining this increase in the scale of stored information with advances in hardware computational power and algorithmic innovations, the field of artificial intelligence (AI) has jumped into the spotlight as machines seem to possess the ‘magical’ ability to learn without being told explicitly what to do.&lt;/p&gt;
+&lt;p&gt;Examples of impressive feats performed by machines include: AlphaGo defeating 9dan rank Go champion Lee Sedol, self-driving cars navigating city streets, and a computer learning to beat Super Mario World by itself. At the heart of such systems have been algorithms called deep neural networks that can model the non-linearities inherently present in image, audio, and video data.&lt;/p&gt;
+&lt;p&gt;So… why is this important?&lt;/p&gt;
+&lt;p&gt;My goal in this article is to convince you that these recent advances in AI aren’t the purview of a select few but that if you’re interested, you too can learn about and contribute to this amazing field. We’ll start by peeling back the layers of abstraction surrounding deep neural networks and begin by using logistic regression as our first principle starting point (had to start somewhere!). I’ll assume you have basic knowledge of matrix math(&lt;a href=&#34;https://www.youtube.com/watch?v=LyGKycYT2v0&#34;&gt;dot products&lt;/a&gt;), calculus (&lt;a href=&#34;https://www.youtube.com/watch?v=AXqhWeUEtQU&#34;&gt;partial derivatives&lt;/a&gt;), probability theory (&lt;a href=&#34;https://www.youtube.com/watch?v=JGeTcRfKgBo&#34;&gt;conditional probability&lt;/a&gt;), and &lt;a href=&#34;https://www.codecademy.com/learn/learn-python&#34;&gt;Python programming&lt;/a&gt;. If not, do not fear! Follow the links above and keep learning — if you have an internet connection and an unyielding thirst for knowledge, be patient with yourself and you’ll soon be slaying all the proverbial giants. I’ve linked references and resources at the end as learning aids — after all, standing on shoulders is a great way to see further ahead.&lt;/p&gt;
+&lt;p&gt;So, by understanding how logistic regression can be modeled as a single neuron you’ll understand fundamental deep learning concepts like &lt;strong&gt;weights&lt;/strong&gt;, &lt;strong&gt;activation functions&lt;/strong&gt;, &lt;strong&gt;loss functions&lt;/strong&gt;, &lt;strong&gt;gradient descent&lt;/strong&gt;, &lt;strong&gt;learning rate&lt;/strong&gt;, &lt;strong&gt;training&lt;/strong&gt;, &lt;strong&gt;forward and backward propagation&lt;/strong&gt;, and &lt;strong&gt;prediction&lt;/strong&gt;. You’ll then be able to move on to more advanced topics that link many neurons together into deep networks — like Convolutional Neural Nets (CNNs), Generative Adversarial Nets (GANs), and Recurrent Neural Nets(RNNs), to name a few. So let’s get started!&lt;/p&gt;
+&lt;h2 id=&#34;a-neuron&#34;&gt;A Neuron&lt;/h2&gt;
+&lt;p&gt;Let’s use the word ‘neuron’ to describe a function that looks like this:
+&lt;img src=&#34;neuron.png&#34; alt=&#34;neuron&#34;&gt;&lt;/p&gt;
+&lt;p&gt;You have inputs and you have an output (this a 1-layer neural net — by convention we don’t count the initial raw inputs as a layer). If you squint hard enough, it even sort of looks like a &lt;a href=&#34;http://s4.thingpic.com/images/E6/BdHJAWutQ3E5zkvcgFz8Kk8x.png&#34;&gt;human neuron&lt;/a&gt;. This function is defined as a weighted sum of its inputs — we multiply the inputs &lt;em&gt;&lt;strong&gt;x&lt;/strong&gt;&lt;/em&gt; by variables &lt;em&gt;&lt;strong&gt;w&lt;/strong&gt;&lt;/em&gt; called weights to get the output. You can think of weights as the strengths of the connections between input and output — for example, if &lt;em&gt;w1&lt;/em&gt; has a higher value than &lt;em&gt;w2&lt;/em&gt;, that implies that the input x1 influences the output more than &lt;em&gt;x2&lt;/em&gt; does. The value &lt;em&gt;b&lt;/em&gt; is called the bias term (it isn’t multiplied by a weight) and is responsible for shifting the function so that it’s not constrained to the origin. Representing the function in matrix form yields:
+&lt;img src=&#34;neuron-matrix-form.png&#34; alt=&#34;neuron-matrix-form&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The shape of the matrix &lt;em&gt;w&lt;/em&gt; is determined by the number of units in the layer you’re mapping to and the number of units in the layer you’re mapping from— hence the shape [1 x 3] because the output layer has 1 unit and the input layer has 3 units (not counting the bias term). This looks a lot like the equation for a line:
+&lt;img src=&#34;line-eqn.png&#34; alt=&#34;line-eqn&#34;&gt;&lt;/p&gt;
+&lt;p&gt;However, the strength of a neural network lies in its ability to model complex nonlinearities. Even if you link many of these units together in a deep network (the green units are called hidden layers) as shown below,&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;3-layer-network.png&#34; alt=&#34;3 layer neural network&#34;&gt;&lt;/p&gt;
+&lt;p&gt;the composition of many linear functions is itself a linear function. So our journey is not yet complete — how can the function model the non-linear patterns present in the input data in such a way that it can predict, with high accuracy, similar patterns in data it has never seen before?&lt;/p&gt;
+&lt;p&gt;To model a non-linear problem, we will need to introduce a nonlinear activation function.&lt;/p&gt;
+&lt;h2 id=&#34;the-sigmoid-function&#34;&gt;The Sigmoid Function&lt;/h2&gt;
+&lt;p&gt;Let’s define a function called sigmoid. It has a probability distribution that looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;sigmoid.png&#34; alt=&#34;Source: https://commons.wikimedia.org/w/index.php?curid=4310325&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The equation for a sigmoid function is:
+&lt;img src=&#34;sigmoid-eqn.png&#34; alt=&#34;sigmoid eqn&#34;&gt;
+The sigmoid activation function converts its input to a value between 0 and 1 — as z increases towards positive infinity the output gets closer to 1, and as z decreases towards negative infinity the output gets closer to 0. Going back to our example of a single neuron, we can feed our function &lt;em&gt;z = wx + b&lt;/em&gt; as an input to the sigmoid activation function, which yields:
+&lt;img src=&#34;neuron-sigmoid-eqn.png&#34; alt=&#34;sigmoid neuron eqn&#34;&gt;
+Where the variable A represents the sigmoid activation function. Showing it pictorially using our single-layer representation of a neuron:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;neuron-sigmoid.png&#34; alt=&#34;Applying the sigmoid activation function&#34;&gt;
+So how is this valuable? Stacking nonlinearities on nonlinearities in a deep network allows us to model very complex relationships between inputs and outputs. Even in the case of our single neuron above, let’s see how adding a nonlinear activation function can be useful.&lt;/p&gt;
+&lt;h2 id=&#34;logistic-regression&#34;&gt;Logistic Regression&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Logistic_regression&#34;&gt;Logistic regression&lt;/a&gt; is a binary classification method. For example, after being trained on images of cats and dogs and then being given a picture that it has never seen before of a cat (y=0) or a dog (y=1), can the machine predict the correct type? As we’ll see, even a simple algorithm like logistic regression can do surprisingly well.
+We want to model a function that can take in any number of inputs and constrain the output to be between 0 and 1. Where have we seen that before? You guessed it — our humble neuron, armed with the sigmoid activation function, boldly comes in to save the day! Now is there a way to measure how good our predicted output is compared to the true label?&lt;/p&gt;
+&lt;h3 id=&#34;loss-function-and-cost-function&#34;&gt;Loss Function and Cost Function&lt;/h3&gt;
+&lt;p&gt;Let’s define &lt;em&gt;y&lt;/em&gt; as the true label (y = 0 or y = 1) and &lt;em&gt;y_hat&lt;/em&gt; as the predicted output (or the probability that y = 1 given inputs w and x). Therefore, the probability that y = 0 given inputs &lt;em&gt;w&lt;/em&gt; and &lt;em&gt;x&lt;/em&gt; is (1 - &lt;em&gt;y_hat&lt;/em&gt;), as shown below.
+&lt;img src=&#34;loss-prob.png&#34; alt=&#34;Loss probability&#34;&gt;
+&lt;a href=&#34;http://cs229.stanford.edu/notes/cs229-notes1.pdf&#34;&gt;After doing some derivations&lt;/a&gt; based on the equations above, we can define the logistic loss function for a set of inputs in a single training example to be:
+&lt;img src=&#34;log-loss.png&#34; alt=&#34;Log loss&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The goal of the loss function is to minimize the error between the predicted and desired output and thus arrive at an optimal solution for one training example. However, to get useful results we need to take the average of the loss function over an entire training set that contains many examples (for a total of m examples). This is defined as the cost function &lt;em&gt;&lt;strong&gt;J(w,b)&lt;/strong&gt;&lt;/em&gt; and we’ll find the parameters &lt;em&gt;&lt;strong&gt;w&lt;/strong&gt;&lt;/em&gt; and &lt;em&gt;&lt;strong&gt;b&lt;/strong&gt;&lt;/em&gt; that minimize the overall cost function:
+&lt;img src=&#34;cost-fn.png&#34; alt=&#34;cost fn&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;gradient-descent&#34;&gt;Gradient Descent&lt;/h3&gt;
+&lt;p&gt;Plotting the cost function &lt;em&gt;&lt;strong&gt;J(w,b)&lt;/strong&gt;&lt;/em&gt; yields a graph that looks like this:
+&lt;img src=&#34;gradient-descent.png&#34; alt=&#34;gradient-descent&#34;&gt;
+One of the reasons we use this cost function for logistic regression is that it’s a convex function with a single global optimum. Imagine rolling a ball down the bowl-shaped function — it would settle at the bottom; similarly, to find the minimum of the cost function, we need to get to the lowest point. To do that, we can start from anywhere on the function and iteratively move down in the direction of the steepest slope, adjusting the values of w and b that lead us to the minimum. The formulas are:
+&lt;img src=&#34;gd-formula.png&#34; alt=&#34;gd-formula&#34;&gt;
+In these two equations, the partial derivatives &lt;em&gt;dw&lt;/em&gt; and &lt;em&gt;db&lt;/em&gt; represent the effect that a change in &lt;em&gt;w&lt;/em&gt; and &lt;em&gt;b&lt;/em&gt; have on the cost function, respectively. By finding the slope and taking the negative of that slope, we ensure that we will always move in the direction of the minimum. To get a better understanding, let’s see this graphically for &lt;em&gt;dw&lt;/em&gt;:
+&lt;img src=&#34;gd-graph.png&#34; alt=&#34;gd-graph&#34;&gt;
+When the derivative term is positive, we move in the opposite direction towards a decreasing value of w and when the derivative is negative we move in the direction of increasing w, thereby ensuring that we’re always moving toward the minimum.&lt;/p&gt;
+&lt;p&gt;The alpha term in front of the partial derivative is called the learning rate and is a measure of how big a step to take at each iteration. The choice of learning parameters is an important one — too small and the model will take an undue amount of time to find the minimum, too large and the model might overshoot the minimum and fail to converge.&lt;/p&gt;
+&lt;p&gt;Gradient descent is the essence of the learning process — through it the machine learns what values of weights and biases minimize the cost function. It does this by iteratively comparing its predicted output for a set of data to the true output in a process called training.&lt;/p&gt;
+&lt;h2 id=&#34;training-a-model&#34;&gt;Training a Model&lt;/h2&gt;
+&lt;p&gt;An athlete is able to perform at a high level because of her extensive training — through repeated iterations and adjustments along the way, she’s able to figure out what works and what doesn’t. Similarly in supervised machine learning, given a set of inputs and output labels, a model learns the best combination of weights and biases that minimizes the overall cost function.&lt;/p&gt;
+&lt;p&gt;(On a high level — when people talk about machine intelligence, it’s important to distinguish between this idea of learning as opposed to the more abstract idea of artificial consciousness, which is harder to quantify. The advanced feats we’ve seen machines do thus far have basically been examples of clever optimization techniques). So what does this learning process look like?&lt;/p&gt;
+&lt;h3 id=&#34;forward-propagation&#34;&gt;Forward Propagation&lt;/h3&gt;
+&lt;p&gt;First, weight and bias values are propagated forward through the model to arrive at a predicted output. At each neuron/node, the linear combination of the inputs is then multiplied by an activation function as described above— the sigmoid function in our example. This process by which weights and biases are propagated from inputs to output is called forward propagation. After arriving at the predicted output, the loss for the training example is calculated. This left-to-right process for a single example is represented in the computation graph below (recall that the prediction &lt;em&gt;y_hat&lt;/em&gt; equals &lt;em&gt;A&lt;/em&gt;):
+&lt;img src=&#34;forward-prop.png&#34; alt=&#34;forward-prop&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;backward-propagation&#34;&gt;Backward Propagation&lt;/h3&gt;
+&lt;p&gt;We previously saw how the gradient descent algorithm allows us to find the minimum of the cost function. Back propagation is the process of calculating the partial derivatives from the loss function back to the inputs, thereby updating the values of w and b that lead us to the minimum. It’s helpful writing out the partial derivatives starting from &lt;em&gt;dA&lt;/em&gt; to see how to arrive at &lt;em&gt;dw&lt;/em&gt; and &lt;em&gt;db&lt;/em&gt;. Using the chain rule of calculus yields:
+&lt;img src=&#34;chain-rule.png&#34; alt=&#34;chain-rule&#34;&gt;
+This right-to-left process that results in updated parameters w and b is represented in the computation graph below, where the results of the derivations are shown:
+&lt;img src=&#34;back-prop.png&#34; alt=&#34;back-prop&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;prediction&#34;&gt;Prediction&lt;/h3&gt;
+&lt;p&gt;After finding the optimal values of &lt;em&gt;w&lt;/em&gt; and &lt;em&gt;b&lt;/em&gt; after a certain number of iterations, the next step is to use those values to calculate the final predicted output. The sigmoid activation function yields a probability distribution between 0 and 1 — for logistic regression we need to convert that to a discrete value of either 0 or 1. To do so, we’ll apply a threshold value to the output, 0.5 for instance, so that probability values 0.5 or above result in a predicted output value of 1, whereas probability values less than 0.5 result in a predicted output value of 0.&lt;/p&gt;
+&lt;p&gt;After predicting the final output, we need to see how well the model did. One way to evaluate classification models is by defining a term called accuracy. It’s the fraction of the predictions that our model got right:
+&lt;img src=&#34;accuracy.png&#34; alt=&#34;accuracy&#34;&gt;
+The figure below summarizes the iterative process through which the machine learns:
+&lt;img src=&#34;model-train.png&#34; alt=&#34;overall training&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;practical-example&#34;&gt;Practical Example&lt;/h2&gt;
+&lt;p&gt;Alright, enough theory, time for application! Remember the cat vs. dog classification problem — given an image of either a cat or a dog, will the computer be able to classify it as one or the other? Let’s implement a single layer neural net representation of logistic regression from scratch using Python. We’ll use Kaggle’s dogs vs. cats dataset and build the model step by step: I’ve created a &lt;a href=&#34;https://github.com/jissac/ScratchML&#34;&gt;Github repository called ScratchML that contains the CatsvsDogs_Logistic_Regression Jupyter notebook&lt;/a&gt;. We’ll go through preparing and pre-processing the data (often the most time-consuming part of the journey) and then define and run our model. Try to understand what each method does and how the formulas above are being implemented. Then re-write them yourself in order to build your intuition.
+After training and running the model, our humble representation of logistic regression managed to get around 69% of the test set correctly classified — not bad for a single layer neural network! Using cutting edge architectures will yield world-class results — but they are built using much of the same principles we learned implementing logistic regression.&lt;/p&gt;
+&lt;h2 id=&#34;now-what&#34;&gt;Now what?&lt;/h2&gt;
+&lt;p&gt;As is the nature of learning, we’ve only scratched the surface. We’ve covered a general overview of the major concepts, but there are yet many more topics to learn such as implementing regularization to prevent overfitting of the data, other activation functions (ReLU, tanh, etc.), stochastic gradient descent (SGD), k-fold cross validation, to name a few.&lt;/p&gt;
+&lt;p&gt;I’ve put together a &lt;a href=&#34;https://github.com/jissac/Machine-Learning-Resources&#34;&gt;list of machine learning resources&lt;/a&gt; that should get you started on your journey. Keep learning and implementing what you learn, after all, it’s an iterative process! Happy descent — may you reach the optimum point! :)&lt;/p&gt;
+&lt;h2 id=&#34;resources&#34;&gt;Resources:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.deeplearningbook.org/contents/optimization.html&#34;&gt;http://www.deeplearningbook.org/contents/optimization.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.coursera.org/learn/neural-networks-deep-learning&#34;&gt;https://www.coursera.org/learn/neural-networks-deep-learning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://cs231n.github.io/neural-networks-1/&#34;&gt;http://cs231n.github.io/neural-networks-1/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stats.stackexchange.com/questions/213325/neural-network-meaning-of-weights&#34;&gt;https://stats.stackexchange.com/questions/213325/neural-network-meaning-of-weights&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/2480650/role-of-bias-in-neural-networks&#34;&gt;https://stackoverflow.com/questions/2480650/role-of-bias-in-neural-networks&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Keep Your Eyes Where You Want to Go, and Other Life Lessons I&#39;ve Learned from Motorcycling</title>

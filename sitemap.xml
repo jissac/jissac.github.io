@@ -4,21 +4,41 @@
   
   <url>
     <loc>https://jamesis.me/post/</loc>
-    <lastmod>2016-09-30T22:21:31-05:00</lastmod>
+    <lastmod>2019-10-22T15:51:20-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesis.me/post/clustering/</loc>
+    <lastmod>2019-10-22T15:51:20-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesis.me/tags/data-science/</loc>
+    <lastmod>2019-10-22T15:51:20-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://jamesis.me/</loc>
-    <lastmod>2016-09-30T22:21:31-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jamesis.me/post/moto/</loc>
-    <lastmod>2016-09-30T22:21:31-05:00</lastmod>
+    <lastmod>2019-10-22T15:51:20-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://jamesis.me/tags/</loc>
+    <lastmod>2019-10-22T15:51:20-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesis.me/post/essential-sql/</loc>
+    <lastmod>2018-11-23T16:22:10-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesis.me/post/deep-learning-lr/</loc>
+    <lastmod>2018-04-18T16:41:18-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesis.me/post/moto/</loc>
     <lastmod>2016-09-30T22:21:31-05:00</lastmod>
   </url>
   
