@@ -5,12 +5,20 @@
     <link>https://jamesis.me/post/</link>
       <atom:link href="https://jamesis.me/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Articles</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>2020 James Issac</copyright><lastBuildDate>Tue, 22 Oct 2019 15:51:20 -0500</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>2020 James Issac</copyright><lastBuildDate>Thu, 06 Feb 2020 21:06:26 -0500</lastBuildDate>
     <image>
       <url>https://jamesis.me/img/icon-192.png</url>
       <title>Articles</title>
       <link>https://jamesis.me/post/</link>
     </image>
+    
+    <item>
+      <title>Grouping in Pandas and PySpark</title>
+      <link>https://jamesis.me/post/grouping/</link>
+      <pubDate>Thu, 06 Feb 2020 21:06:26 -0500</pubDate>
+      <guid>https://jamesis.me/post/grouping/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Clustering: Birds of a Feather Flock Together</title>
