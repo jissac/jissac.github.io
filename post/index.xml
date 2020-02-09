@@ -17,7 +17,11 @@
       <link>https://jamesis.me/post/grouping/</link>
       <pubDate>Thu, 06 Feb 2020 21:06:26 -0500</pubDate>
       <guid>https://jamesis.me/post/grouping/</guid>
-      <description></description>
+      <description>&lt;p&gt;Grouping is a fundamental idea in data science - one that helps the data scientist glean overall insights from seemingly disjointed data elements. In this article, we&amp;rsquo;ll take a look at how to group data elements using both the Python Pandas library as well as the distributed computing framework PySpark.&lt;/p&gt;
+&lt;h2 id=&#34;grouping-in-pandas&#34;&gt;Grouping in Pandas&lt;/h2&gt;
+&lt;p&gt;In the Python library Pandas, the concept of grouping is often mentioned in the overall context of the term &amp;ldquo;split-combine-apply&amp;rdquo;.&lt;/p&gt;
+&lt;h2 id=&#34;grouping-in-pyspark&#34;&gt;Grouping in PySpark&lt;/h2&gt;
+</description>
     </item>
     
     <item>
