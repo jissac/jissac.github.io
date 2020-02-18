@@ -5,7 +5,7 @@
     <link>https://jamesis.me/tags/</link>
       <atom:link href="https://jamesis.me/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>2020 James Issac</copyright><lastBuildDate>Tue, 22 Oct 2019 15:51:20 -0500</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>2020 James Issac</copyright><lastBuildDate>Sun, 01 Dec 2019 16:34:24 -0500</lastBuildDate>
     <image>
       <url>https://jamesis.me/img/icon-192.png</url>
       <title>Tags</title>
@@ -13,18 +13,18 @@
     </image>
     
     <item>
-      <title>data-science</title>
-      <link>https://jamesis.me/tags/data-science/</link>
-      <pubDate>Tue, 22 Oct 2019 15:51:20 -0500</pubDate>
-      <guid>https://jamesis.me/tags/data-science/</guid>
+      <title>travel</title>
+      <link>https://jamesis.me/tags/travel/</link>
+      <pubDate>Sun, 01 Dec 2019 16:34:24 -0500</pubDate>
+      <guid>https://jamesis.me/tags/travel/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>travel</title>
-      <link>https://jamesis.me/tags/travel/</link>
-      <pubDate>Fri, 30 Sep 2016 22:21:31 -0500</pubDate>
-      <guid>https://jamesis.me/tags/travel/</guid>
+      <title>data-science</title>
+      <link>https://jamesis.me/tags/data-science/</link>
+      <pubDate>Tue, 22 Oct 2019 15:51:20 -0500</pubDate>
+      <guid>https://jamesis.me/tags/data-science/</guid>
       <description></description>
     </item>
     
