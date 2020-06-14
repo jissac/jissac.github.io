@@ -191,7 +191,8 @@ If you make a mistake creating a table using the command &lt;code&gt;DROP TABLE 
 &lt;p&gt;&lt;em&gt;I hope this gets you started on your SQL journey. As always, there’s much more to learn and queries can become quite complicated. However, these basics will guide you as you practice — so here’s to more querying!&lt;/em&gt;&lt;/p&gt;
 &lt;h2 id=&#34;resources&#34;&gt;Resources:&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;These are my notes from the excellent DataQuest learning track. Check them out and subscribe at &lt;a href=&#34;http://www.dataquest.io&#34;&gt;www.dataquest.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;These are my notes from the DataQuest learning track. Check them out and subscribe at &lt;a href=&#34;http://www.dataquest.io&#34;&gt;www.dataquest.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Check out Luke Harrison&amp;rsquo;s excellent SQL Cheat Sheet: &lt;a href=&#34;https://websitesetup.org/sql-cheat-sheet/&#34;&gt;https://websitesetup.org/sql-cheat-sheet/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;For a complete list of SQL commands, check out: &lt;a href=&#34;https://www.tutorialspoint.com/sqlite&#34;&gt;https://www.tutorialspoint.com/sqlite&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;A SQL style guide: &lt;a href=&#34;https://www.sqlstyle.guide/&#34;&gt;https://www.sqlstyle.guide/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
